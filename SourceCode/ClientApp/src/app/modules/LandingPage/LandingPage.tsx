@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 export const LandingPage = () => {
   return (
     <div>
-      <h1>Hello Project is ready</h1>
+      <h1>Hello,BetMyGame Project is under construction</h1>
     </div>
   );
 };
