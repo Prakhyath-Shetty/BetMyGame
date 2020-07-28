@@ -27,5 +27,3 @@ yarn-error.log*
 /SourceCode/ClientApp1
 /SourceCode/ClientApp1/node_modules
 /SourceCode/BackendServer/node_modules
-/ClientApp1
-/UI
