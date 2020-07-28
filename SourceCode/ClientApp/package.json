@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material/react-material-icon": "^0.15.0",
     "connected-react-router": "6.5.2",
     "history": "4.10.1",
     "popper.js": "^1.16.0",

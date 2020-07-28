@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import MaterialIcon from "@material/react-material-icon";
 export default class DrawerNav extends Component {
   render() {
     return (
@@ -25,15 +25,17 @@ export default class DrawerNav extends Component {
                     <strong>Julian Gruber</strong>
                     <div className="text-muted">
                       {/* <ion-icon name="location"></ion-icon> */}
+                      <MaterialIcon icon="menu" />
                       California
                     </div>
                   </div>
                   <a
-                    href="javascript:;"
+                    href="#"
                     className="close-sidebar-button"
                     data-dismiss="modal"
                   >
                     {/* <ion-icon name="close"></ion-icon> */}
+                    <MaterialIcon icon="menu" />
                   </a>
                 </div>
 
@@ -42,6 +44,7 @@ export default class DrawerNav extends Component {
                     <a href="index.html" className="item">
                       <div className="icon-box bg-primary">
                         {/* <ion-icon name="home-outline"></ion-icon> */}
+                        <MaterialIcon icon="menu" />
                       </div>
                       <div className="in">Discover</div>
                     </a>
@@ -50,6 +53,7 @@ export default class DrawerNav extends Component {
                     <a href="app-components.html" className="item">
                       <div className="icon-box bg-primary">
                         {/* <ion-icon name="cube-outline"></ion-icon> */}
+                        <MaterialIcon icon="menu" />
                       </div>
                       <div className="in">Components</div>
                     </a>
@@ -58,6 +62,7 @@ export default class DrawerNav extends Component {
                     <a href="app-pages.html" className="item">
                       <div className="icon-box bg-primary">
                         {/* <ion-icon name="layers-outline"></ion-icon> */}
+                        <MaterialIcon icon="menu" />
                       </div>
                       <div className="in">
                         <div>Pages</div>
@@ -68,6 +73,7 @@ export default class DrawerNav extends Component {
                     <a href="page-chat.html" className="item">
                       <div className="icon-box bg-primary">
                         {/* <ion-icon name="chatbubble-ellipses-outline"></ion-icon> */}
+                        <MaterialIcon icon="menu" />
                       </div>
                       <div className="in">
                         <div>Chat</div>
@@ -79,6 +85,7 @@ export default class DrawerNav extends Component {
                     <div className="item">
                       <div className="icon-box bg-primary">
                         {/* <ion-icon name="moon-outline"></ion-icon> */}
+                        <MaterialIcon icon="menu" />
                       </div>
                       <div className="in">
                         <div>Dark Mode</div>
@@ -167,17 +174,21 @@ export default class DrawerNav extends Component {
               </div>
 
               <div className="sidebar-buttons">
-                <a href="javascript:;" className="button">
+                <a href="#" className="button">
                   {/* <ion-icon name="person-outline"></ion-icon> */}
+                  <MaterialIcon icon="menu" />
                 </a>
-                <a href="javascript:;" className="button">
+                <a href="#" className="button">
                   {/* <ion-icon name="archive-outline"></ion-icon> */}
+                  <MaterialIcon icon="menu" />
                 </a>
-                <a href="javascript:;" className="button">
+                <a href="#" className="button">
                   {/* <ion-icon name="settings-outline"></ion-icon> */}
+                  <MaterialIcon icon="menu" />
                 </a>
-                <a href="javascript:;" className="button">
+                <a href="#" className="button">
                   {/* <ion-icon name="log-out-outline"></ion-icon> */}
+                  <MaterialIcon icon="menu" />
                 </a>
               </div>
             </div>

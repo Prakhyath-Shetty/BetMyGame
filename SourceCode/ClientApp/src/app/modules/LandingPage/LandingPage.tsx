@@ -1,10 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
+import Layout from "../../components/Layout/Layout";
 
 export const LandingPage = () => {
   return (
     <div>
-      <h1>Hello,BetMyGame Project is under construction</h1>
+      <Layout></Layout>
     </div>
   );
 };
