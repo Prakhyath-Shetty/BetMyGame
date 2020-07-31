@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router";
 import Layout from "./components/Layout/Layout";
+import "./assets/css/styles.css";
 // import "./App.css";
 
 import { LandingPage } from "./modules/LandingPage/LandingPage";

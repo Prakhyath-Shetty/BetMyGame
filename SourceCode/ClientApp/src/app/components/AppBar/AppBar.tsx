@@ -1,26 +1,54 @@
 import React, { Component } from "react";
+import { IoMdMenu, IoMdSearch } from "react-icons/io";
 
 export default class AppBar extends Component {
+  onToggleSidebar = () => {
+    // ! dispatch action here
+  };
   render() {
     return (
-      <div className="appHeader bg-primary scrolled">
-        <div className="left">
-          <a
-            href="#"
-            className="headerButton"
-            data-toggle="modal"
-            data-target="#sidebarPanel"
-          >
-            {/* <ion-icon name="menu-outline"></ion-icon> */}
-          </a>
+      <React.Fragment>
+        <div className="appHeader bg-primary scrolled">
+          <div className="left">
+            <a
+              href="ggg"
+              className="headerButton"
+              data-toggle="modal"
+              data-target="#sidebarPanel"
+              onClick={() => {
+                this.onToggleSidebar();
+              }}
+            >
+              <IoMdMenu size={"26px"} />
+            </a>
+          </div>
+          <div className="pageTitle">Discover</div>
+          <div className="right">
+            <a href="hh" className="headerButton toggle-searchbox">
+              <IoMdSearch size={"26px"} />
+            </a>
+          </div>
         </div>
-        <div className="pageTitle">Discover</div>
-        <div className="right">
-          <a href="javascript:;" className="headerButton toggle-searchbox">
-            {/* <ion-icon name="search-outline"></ion-icon> */}
-          </a>
+        {/* <!-- Search Component --> */}
+        <div id="search" className="appHeader">
+          <form className="search-form">
+            <div className="form-group searchbox">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search..."
+              />
+              <i className="input-icon">
+                {/* <ion-icon name="search-outline"></ion-icon> */}
+              </i>
+              <a href="hh" className="ml-1 close toggle-searchbox">
+                {/* <ion-icon name="close-circle"></ion-icon> */}
+              </a>
+            </div>
+          </form>
         </div>
-      </div>
+        {/* <!-- * Search Component --> */}
+      </React.Fragment>
     );
   }
 }

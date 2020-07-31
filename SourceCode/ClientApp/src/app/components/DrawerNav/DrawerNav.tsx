@@ -4,15 +4,18 @@ export default class DrawerNav extends Component {
   render() {
     return (
       <>
+        {/* <!-- App Sidebar --> */}
         <div
-          className="modal fade panelbox panelbox-left"
+          className="modal fade panelbox panelbox-left show"
           id="sidebarPanel"
-          tabIndex={1}
+          tabIndex={-1}
           role="dialog"
+          // style={{ display: "block" }}
         >
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-body p-0">
+                {/* <!-- profile box --> */}
                 <div className="profileBox">
                   <div className="image-wrapper">
                     <img
@@ -29,13 +32,14 @@ export default class DrawerNav extends Component {
                     </div>
                   </div>
                   <a
-                    href="javascript:;"
+                    href=""
                     className="close-sidebar-button"
                     data-dismiss="modal"
                   >
                     {/* <ion-icon name="close"></ion-icon> */}
                   </a>
                 </div>
+                {/* <!-- * profile box --> */}
 
                 <ul className="listview flush transparent no-line image-listview mt-2">
                   <li>
@@ -106,7 +110,7 @@ export default class DrawerNav extends Component {
                     <a href="page-chat.html" className="item">
                       <img
                         src="assets/img/sample/avatar/avatar7.jpg"
-                        alt="image"
+                        alt=""
                         className="image"
                       />
                       <div className="in">
@@ -118,7 +122,7 @@ export default class DrawerNav extends Component {
                     <a href="page-chat.html" className="item">
                       <img
                         src="assets/img/sample/avatar/avatar3.jpg"
-                        alt="image"
+                        alt=""
                         className="image"
                       />
                       <div className="in">
@@ -165,18 +169,17 @@ export default class DrawerNav extends Component {
                   </li>
                 </ul>
               </div>
-
               <div className="sidebar-buttons">
-                <a href="javascript:;" className="button">
+                <a href="" className="button">
                   {/* <ion-icon name="person-outline"></ion-icon> */}
                 </a>
-                <a href="javascript:;" className="button">
+                <a href="" className="button">
                   {/* <ion-icon name="archive-outline"></ion-icon> */}
                 </a>
-                <a href="javascript:;" className="button">
+                <a href="" className="button">
                   {/* <ion-icon name="settings-outline"></ion-icon> */}
                 </a>
-                <a href="javascript:;" className="button">
+                <a href="" className="button">
                   {/* <ion-icon name="log-out-outline"></ion-icon> */}
                 </a>
               </div>

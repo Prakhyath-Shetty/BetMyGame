@@ -36,14 +36,14 @@ if (true) {
         $(_0x4461("0x3b")).addClass("show");
       } else {
         var _0x1e3c5c = "#" + target;
-        $(_0x4461("0x8f")).removeClass("show");
+        $(".toast-box").removeClass("show");
         setTimeout(() => {
           $(_0x1e3c5c).addClass("show");
         }, 0x64);
         if (time) {
           time = time + 0x64;
           setTimeout(() => {
-            $(_0x4461("0x8f")).removeClass("show");
+            $(".toast-box").removeClass("show");
           }, time);
         }
       }
@@ -85,12 +85,12 @@ if (true) {
   $(function () {
     $('[data-toggle="tooltip"]')["tooltip"]();
   });
-  $(_0x4461("0xa7")).click(function () {
+  $(".clear-input").click(function () {
     $(this).parent(_0x4461("0x60")).find(_0x4461("0x7d"))["focus"]();
     $(this).parent(_0x4461("0x60")).find(_0x4461("0x7d")).val("");
     $(this).parent(_0x4461("0x60")).removeClass("not-empty");
   });
-  $(_0x4461("0x25"))
+  $(".form-group .form-control")
     .focus(function () {
       $(this).parent(_0x4461("0x60")).addClass("active");
     })
@@ -268,7 +268,7 @@ if (true) {
           if (_0x4461("0x5b") !== _0x4461("0x5b")) {
             e.preventDefault();
           } else {
-            $(_0x4461("0x8f")).removeClass("show");
+            $(".toast-box").removeClass("show");
           }
         }, _0x5d268d);
       }
