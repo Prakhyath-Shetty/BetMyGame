@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import { IoMdMenu, IoMdSearch } from "react-icons/io";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { NavLink } from "react-router-dom";
 
-export default class AppBar extends Component {
+export class AppBar extends Component {
   onToggleSidebar = () => {
     // ! dispatch action here
   };
+  signUp = () => {};
   render() {
     return (
       <React.Fragment>
@@ -22,6 +26,18 @@ export default class AppBar extends Component {
               <IoMdMenu size={"26px"} />
             </a>
           </div>
+          <div className="center">
+            <NavLink
+              className="headerButton"
+              data-toggle="modal"
+              data-target="#sidebarPanel"
+              to="/RegisterPage"
+              // activeClassName="active-link"
+              //isActive={checkActive}
+            >
+              Sign-Up
+            </NavLink>
+          </div>
           <div className="pageTitle">Discover</div>
           <div className="right">
             <a href="hh" className="headerButton toggle-searchbox">
@@ -29,6 +45,7 @@ export default class AppBar extends Component {
             </a>
           </div>
         </div>
+
         {/* <!-- Search Component --> */}
         <div id="search" className="appHeader">
           <form className="search-form">
@@ -52,3 +69,12 @@ export default class AppBar extends Component {
     );
   }
 }
+const mapStateToProps = (state: any) => {
+  return {
+    history: state.history,
+  };
+};
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppBar);
