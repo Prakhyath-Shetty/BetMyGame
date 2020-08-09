@@ -9,6 +9,8 @@ export interface AuthState {
   registerInProgress: boolean;
   registerStatus: HttpStatus;
   user: IUser | null;
+  otpStatus: boolean;
+  isLoggedIn: boolean;
 }
 
 // -----------------
@@ -27,12 +29,22 @@ export interface RegisterErrorAction {
   type: "REGISTER_ERROR";
   payload: any;
 }
+export interface ValidateOTPSuccessAction {
+  type: "OTP_SUCCESS";
+  payload: any;
+}
+export interface ValidateOTPErrorAction {
+  type: "OTP_ERROR";
+  payload: any;
+}
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
 export type KnownAction =
   | RegisterRequestAction
   | RegisterSuccessAction
-  | RegisterErrorAction;
+  | RegisterErrorAction
+  | ValidateOTPSuccessAction
+  | ValidateOTPErrorAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
@@ -45,6 +57,10 @@ export const actionCreators = {
     ({ type: "REGISTER_SUCCESS", payload: user } as RegisterSuccessAction),
   registerError: (error: any) =>
     ({ type: "REGISTER_ERROR", payload: error } as RegisterErrorAction),
+  validateOTPSuccess: (data: any) =>
+    ({ type: "OTP_SUCCESS", payload: data } as ValidateOTPSuccessAction),
+  validateOTPError: (error: any) =>
+    ({ type: "OTP_ERROR", payload: error } as ValidateOTPErrorAction),
 };
 
 // ----------------
@@ -66,6 +82,8 @@ export const reducer: Reducer<AuthState> = (
         email: "",
         userId: 1,
       },
+      otpStatus: false,
+      isLoggedIn: false,
     };
   }
 
@@ -73,21 +91,38 @@ export const reducer: Reducer<AuthState> = (
   switch (action.type) {
     case "REGISTER_REQUEST":
       return {
+        ...state,
         registerInProgress: true,
         registerStatus: HttpStatus.pending,
         user: null,
       };
     case "REGISTER_SUCCESS":
       return {
+        ...state,
         registerInProgress: false,
         registerStatus: HttpStatus.success,
         user: action.payload,
       };
     case "REGISTER_ERROR":
       return {
+        ...state,
         registerInProgress: false,
         registerStatus: HttpStatus.error,
         user: null,
+      };
+    case "OTP_SUCCESS":
+      return {
+        ...state,
+        registerInProgress: false,
+        registerStatus: HttpStatus.success,
+        otpStatus: action.payload,
+      };
+    case "OTP_ERROR":
+      return {
+        ...state,
+        registerInProgress: false,
+        registerStatus: HttpStatus.error,
+        otpStatus: false,
       };
     default:
       return state;
@@ -111,9 +146,26 @@ export const registerUser = (user: IUser) => {
       });
   };
 };
+
 export const sendOTP = (phoneNumber: number) => {
   return "123";
 };
+
+export const validateOTP = (otp: number) => {
+  debugger;
+  return (dispatch: any) => {
+    //dispatch(actionCreators.registerRequest());
+    axios
+      .get("https://jsonplaceholder.typicode.com/users")
+      .then((response: any) => {
+        dispatch(actionCreators.validateOTPSuccess(true));
+      })
+      .catch((err: any) => {
+        dispatch(actionCreators.validateOTPError(err.message));
+      });
+  };
+};
+
 export const USER_LOGOUT = () => {
   return "valid";
 };

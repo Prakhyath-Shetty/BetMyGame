@@ -1,277 +1,358 @@
-import React, { useState, Component } from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers";
 import TextError from "../../components/ErrorMessage/ErrorMessage";
-import { registerUser } from "../../shared/ducks/Auth/Auth.duck";
+import { registerUser, validateOTP } from "../../shared/ducks/Auth/Auth.duck";
 import { connect } from "react-redux";
-import { Redirect } from "react-router";
-
-interface RegisterPageProps {
-  user: number;
-  registerStatus: number;
-  registerInProgress: boolean;
-  registerUser: any;
+interface IFormInput {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: number;
+  userId: number;
+  OTP: number;
 }
-
-interface RegisterPageState {
-  formValues: null;
-  redirectToLogin: boolean;
+interface IFormInputOTP {
+  OTP: number;
 }
-export class RegisterPage extends Component<
-  RegisterPageProps,
-  RegisterPageState
-> {
-  constructor(props: any) {
-    super(props);
-    this.state = { formValues: null, redirectToLogin: false };
-  }
-  render() {
-    const { user, registerStatus, registerInProgress } = this.props;
-    const { formValues, redirectToLogin } = this.state;
-    const initialValues = {
-      userId: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: "",
-      OTP: "",
-    };
+interface IFormInputUserCredentials {
+  userEmail: string;
+  password: string;
+  confirmPassword: string;
+}
+const phoneno = new RegExp(
+  /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+);
 
-    const handleSubmit = (values: any, submitProps: any) => {
-      submitProps.setSubmitting(false);
-      this.props.registerUser({
-        values,
-      });
-      submitProps.resetForm();
-    };
-
-    const otpHandleSubmit = (values: any, submitProps: any) => {
-      debugger;
-      console.log("Form data", values);
-      console.log("Form user", user);
-      submitProps.setSubmitting(false);
-      if (values.OTP === user) {
-        this.setState({ redirectToLogin: true });
-      }
-      submitProps.resetForm();
-    };
-    const phoneno = new RegExp(
-      /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
-    );
-    const validationSchema = Yup.object({
-      firstName: Yup.string().required("Required"),
-      lastName: Yup.string().required("Required"),
-      email: Yup.string().email("Invalid email format").required("Required"),
-      phoneNumber: Yup.string()
-        .matches(phoneno, "Phone number is not valid")
-        .required("Required"),
-      userId: Yup.string()
-        .matches(
-          phoneno,
-          "UserId must be 10 character long and must be a number"
-        )
-        .required("Required"),
-    });
-    const otpValidationSchema = Yup.object({
-      OTP: Yup.string().required("Required"),
-    });
-    if (redirectToLogin) {
-      return <Redirect to="/LoginPage" />;
+function OTPHandler(props: any) {
+  const otpValidationSchema = Yup.object({
+    OTP: Yup.string().required("Please enter the OTP"),
+  });
+  const { user, registerStatus, registerInProgress } = props;
+  const { register, handleSubmit, errors } = useForm<IFormInputOTP>({
+    resolver: yupResolver(otpValidationSchema),
+  });
+  const otpHandleSubmit = (data: IFormInputOTP) => {
+    debugger;
+    if (user === data.OTP) {
+      props.handleOTP({ data });
     }
-    return (
-      <div id="appCapsule">
-        <div className="login-form">
-          <Formik
-            initialValues={formValues || initialValues}
-            validationSchema={
-              registerStatus == 2 ? otpValidationSchema : validationSchema
-            }
-            onSubmit={registerStatus == 2 ? otpHandleSubmit : handleSubmit}
-            enableReinitialize
-          >
-            {(formik) => {
-              console.log("Formik props", formik);
-              return (
-                <Form translate="true">
-                  {registerStatus == 2 ? (
-                    <div>
-                      <div className="section">
-                        <h1>OTP</h1>
-                        <h4>Fill the form to join us</h4>
-                      </div>
-                      <div className="section mt-2 mb-5">
-                        <div className="form-group boxed">
-                          <div className="input-wrapper">
-                            <Field
-                              className="form-control"
-                              type="text"
-                              id="OTP"
-                              name="OTP"
-                              placeholder=" Enter OTP"
-                            />
-                            <i className="clear-input">
-                              {/* <ion-icon name="close-circle" /> */}
-                            </i>
-                            <div className="form-text text-muted small text-danger pl-3">
-                              <ErrorMessage name="OTP" component={TextError} />
-                            </div>
-                          </div>
-                        </div>
-                        <div className="mt-1 text-left">
-                          <button
-                            type="submit"
-                            className="btn btn-primary btn-block btn-lg"
-                            disabled={!formik.isValid || formik.isSubmitting}
-                          >
-                            Register
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div>
-                      <div className="section">
-                        <h1>Register</h1>
-                        <h4>Fill the form to join us</h4>
-                      </div>
-                      <div className="section mt-2 mb-5">
-                        <div className="form-group boxed">
-                          <div className="input-wrapper">
-                            <Field
-                              className="form-control"
-                              type="text"
-                              id="firstName"
-                              name="firstName"
-                              placeholder="First name"
-                            />
-                            <i className="clear-input">
-                              {/* <ion-icon name="close-circle" /> */}
-                            </i>
-                            <div className="form-text text-muted small text-danger pl-3">
-                              <ErrorMessage
-                                name="firstName"
-                                component={TextError}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div className="form-group boxed">
-                          <div className="input-wrapper">
-                            <Field
-                              className="form-control"
-                              type="text"
-                              id="lastName"
-                              name="lastName"
-                              placeholder="Last name"
-                            />
-                            <i className="clear-input">
-                              {/* <ion-icon name="close-circle" /> */}
-                            </i>
-                            <div className="form-text text-muted small text-danger pl-3">
-                              <ErrorMessage
-                                name="lastName"
-                                component={TextError}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div className="form-group boxed">
-                          <div className="input-wrapper">
-                            <Field
-                              className="form-control"
-                              type="email"
-                              id="email"
-                              name="email"
-                              placeholder="Email Address"
-                            />
-                            <i className="clear-input">
-                              {/* <ion-icon name="close-circle" /> */}
-                            </i>
-                            <div className="form-text text-muted small text-danger pl-3">
-                              <ErrorMessage name="email">
-                                {(error) => (
-                                  <div className="error">{error}</div>
-                                )}
-                              </ErrorMessage>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="form-group boxed">
-                          <div className="input-wrapper">
-                            <Field
-                              className="form-control"
-                              type="text"
-                              id="phoneNumber"
-                              name="phoneNumber"
-                              placeholder="Phone Number"
-                            />
-                            <i className="clear-input">
-                              {/* <ion-icon name="close-circle" /> */}
-                            </i>
-                            <div className="form-text text-muted small text-danger pl-3">
-                              <ErrorMessage name="phoneNumber">
-                                {(error) => (
-                                  <div className="danger">{error}</div>
-                                )}
-                              </ErrorMessage>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="form-group boxed">
-                          <div className="input-wrapper">
-                            <Field
-                              className="form-control"
-                              type="text"
-                              id="userId"
-                              name="userId"
-                              placeholder="User Id"
-                            />
-                            <i className="clear-input">
-                              {/* <ion-icon name="close-circle" /> */}
-                            </i>
-                            <div className="form-text text-muted small text-danger pl-3">
-                              <ErrorMessage name="userId">
-                                {(error) => (
-                                  <div className="error">{error}</div>
-                                )}
-                              </ErrorMessage>
-                            </div>
-                          </div>
-                        </div>
+  };
+  return (
+    <div id="appCapsule">
+      <div className="login-form">
+        <div>
+          <div className="section">
+            <h1>OTP</h1>
+            <h4>Fill the form to join us</h4>
+          </div>
+          <form onSubmit={handleSubmit(otpHandleSubmit)}>
+            <div className="section mt-2 mb-5">
+              <div className="form-group boxed">
+                <div className="input-wrapper">
+                  <input
+                    className="form-control"
+                    name="OTP"
+                    placeholder="Enter OTP"
+                    ref={register({ required: true })}
+                  />
+                  <i className="clear-input"></i>
+                  <div className="form-text text-muted small text-danger pl-3">
+                    {errors.OTP && errors.OTP.message}
+                  </div>
+                </div>
+              </div>
 
-                        <div className="mt-1 text-left">
-                          <button
-                            type="submit"
-                            className="btn btn-primary btn-block btn-lg"
-                            disabled={!formik.isValid || formik.isSubmitting}
-                          >
-                            Verify
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </Form>
-              );
-            }}
-          </Formik>
+              <div className="mt-1 text-left">
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-block btn-lg"
+                >
+                  Verify
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
+function CreateAccount(props: any) {
+  const createAccountSchema = Yup.object({
+    userEmail: Yup.string()
+      .email("Invalid email format")
+      .required("Email-address is Required"),
+    password: Yup.string()
+      .required("This field is required")
+      .min(8, "Password must have at least 8 characters")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        "Password field must contain mixture of characters"
+      ),
+    confirmPassword: Yup.string()
+      .required("This field is required")
+      .oneOf([Yup.ref("password"), ""], "Passwords must match"),
+  });
+  const { user, registerStatus, registerInProgress } = props;
+  const { register, handleSubmit, errors } = useForm<IFormInputUserCredentials>(
+    {
+      resolver: yupResolver(createAccountSchema),
+    }
+  );
+  const createAccountHandle = (data: IFormInputUserCredentials) => {
+    props.createAccount({ data });
+  };
+  return (
+    <div id="appCapsule" className="pt-0">
+      <div className="login-form mt-1">
+        <div className="section">
+          <img
+            src="assets/img/sample/photo/vector4.png"
+            alt="image"
+            className="form-image"
+          />
+        </div>
+        <div className="section mt-1">
+          <h1>Get started</h1>
+          <h4>Fill the form to log in</h4>
+        </div>
+        <div className="section mt-1 mb-5">
+          <form onSubmit={handleSubmit(createAccountHandle)}>
+            <div className="form-group boxed">
+              <div className="input-wrapper">
+                <input
+                  className="form-control"
+                  name="userEmail"
+                  placeholder="Enter email-address"
+                  ref={register({ required: true })}
+                />
+                <i className="clear-input">
+                  {/* <ion-icon name="close-circle" /> */}
+                </i>
+                <div className="form-text text-muted small text-danger pl-3">
+                  {errors.userEmail && errors.userEmail.message}
+                </div>
+              </div>
+            </div>
+            <div className="form-group boxed">
+              <div className="input-wrapper">
+                <input
+                  className="form-control"
+                  name="password"
+                  type="password"
+                  placeholder="Enter Password"
+                  ref={register({ required: true, minLength: 8 })}
+                />
+                <i className="clear-input">
+                  {/* <ion-icon name="close-circle" /> */}
+                </i>
+                <div className="form-text text-muted small text-danger pl-3">
+                  {errors.password && errors.password.message}
+                </div>
+              </div>
+            </div>
+            <div className="form-group boxed">
+              <div className="input-wrapper">
+                <input
+                  className="form-control"
+                  name="confirmPassword"
+                  type="password"
+                  placeholder="Password (Again)"
+                  ref={register({ required: true })}
+                />
+                <i className="clear-input">
+                  {/* <ion-icon name="close-circle" /> */}
+                </i>
+                <div className="form-text text-muted small text-danger pl-3">
+                  {errors.confirmPassword && errors.confirmPassword.message}
+                </div>
+              </div>
+            </div>
+            <div className="form-links mt-2">
+              <div>
+                <a href="page-register.html">Register Now</a>
+              </div>
+              <div>
+                <a href="page-forgot-password.html" className="text-muted">
+                  Forgot Password?
+                </a>
+              </div>
+            </div>
+            <div className="form-button-group1">
+              <button
+                type="submit"
+                className="btn btn-primary btn-block btn-lg"
+              >
+                Log in
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
+function RegisterPageHandler(props: any) {
+  const registerSchema = Yup.object({
+    firstName: Yup.string().required("First-name is Required"),
+    lastName: Yup.string().required("Last-name is Required"),
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Email-Address is Required"),
+    phoneNumber: Yup.string()
+      .required("Phone Number is Required")
+      .matches(phoneno, "Phone number is not valid"),
+
+    userId: Yup.string()
+      .required("User-Id is Required")
+      .matches(
+        phoneno,
+        "UserId must be 10 character long and must be a number"
+      ),
+  });
+
+  const { register, handleSubmit, errors } = useForm<IFormInput>({
+    resolver: yupResolver(registerSchema),
+  });
+  const { user, registerStatus, registerInProgress } = props;
+  console.log("props", props);
+
+  const onSubmit = (data: IFormInput) => {
+    props.registerUser({
+      data,
+    });
+  };
+
+  console.log("errors", errors);
+  return (
+    <div id="appCapsule">
+      <div className="login-form">
+        <div>
+          <div className="section">
+            <h1>Register</h1>
+            <h4>Fill the form to join us</h4>
+          </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="section mt-2 mb-5">
+              <div className="form-group boxed">
+                <div className="input-wrapper">
+                  <input
+                    className="form-control"
+                    name="firstName"
+                    placeholder="Enter First-name"
+                    ref={register({ required: true, maxLength: 20 })}
+                  />
+                  <i className="clear-input"></i>
+                  <div className="form-text text-muted small text-danger pl-3">
+                    {errors.firstName && "First name is required"}
+                  </div>
+                </div>
+              </div>
+              <div className="form-group boxed">
+                <div className="input-wrapper">
+                  <input
+                    className="form-control"
+                    name="lastName"
+                    placeholder="Enter Last-name"
+                    ref={register({ required: true, maxLength: 20 })}
+                  />
+                  <i className="clear-input"></i>
+                  <div className="form-text text-muted small text-danger pl-3">
+                    {errors.lastName && "Last name is required"}
+                  </div>
+                </div>
+              </div>
+              <div className="form-group boxed">
+                <div className="input-wrapper">
+                  <input
+                    className="form-control"
+                    name="email"
+                    placeholder="Enter Email-address"
+                    ref={register({ required: true })}
+                  />
+                  <i className="clear-input"></i>
+                  <div className="form-text text-muted small text-danger pl-3">
+                    {errors.email && errors.email.message}
+                  </div>
+                </div>
+              </div>
+              <div className="form-group boxed">
+                <div className="input-wrapper">
+                  <input
+                    className="form-control"
+                    name="phoneNumber"
+                    placeholder="Enter Phone-number"
+                    ref={register({ required: true })}
+                  />
+                  <i className="clear-input"></i>
+                  <div className="form-text text-muted small text-danger pl-3">
+                    {errors.phoneNumber && errors.phoneNumber.message}
+                  </div>
+                </div>
+              </div>
+              <div className="form-group boxed">
+                <div className="input-wrapper">
+                  <input
+                    className="form-control"
+                    name="userId"
+                    type="text"
+                    placeholder="Enter Userd-Id"
+                    ref={register({ required: true })}
+                  />
+                  <i className="clear-input"></i>
+                  <div className="form-text text-muted small text-danger pl-3">
+                    {errors.userId && errors.userId.message}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-1 text-left">
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-block btn-lg"
+                >
+                  Verify
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 }
 
+function RegisterPage(props: any) {
+  const { user, registerStatus, registerInProgress, otpStatus } = props;
+  console.log("RegisterPage", props);
+
+  //const isLoggedIn = props.isLoggedIn;
+  if (registerStatus == 2) {
+    if (otpStatus) {
+      return <CreateAccount createAccount={props.createAccount} />;
+    }
+    return <OTPHandler handleOTP={props.handleOTP} user={user} />;
+  } else {
+    return <RegisterPageHandler registerUser={props.register} />;
+  }
+}
 const mapStateToProps = (state: any) => {
   console.log("state", state.auth);
-  const { user, registerStatus, registerInProgress } = state.auth;
+  const { user, otpStatus, registerStatus, registerInProgress } = state.auth;
   return {
     user,
     registerStatus,
     registerInProgress,
+    otpStatus,
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-  registerUser: (user: any) => dispatch(registerUser(user)),
+  register: (user: any) => dispatch(registerUser(user)),
+  handleOTP: (otp: any) => dispatch(validateOTP(otp)),
+  createAccount: (userInfo: any) => dispatch(validateOTP(userInfo)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);
