@@ -11,9 +11,23 @@ var inversify_1 = require("inversify");
 var UserRepository = /** @class */ (function () {
     function UserRepository() {
     }
+    UserRepository.prototype.findOne = function (username) {
+        //
+        return {
+            id: 1,
+            username: "Prakhyath shetty",
+            phone: "9844986072",
+            password: "prakhyth@123",
+        };
+    };
     UserRepository.prototype.findAll = function () {
         //
-        return { firstName: "Prakhyath shetty", phone: "9844986072" };
+        return {
+            id: 1,
+            username: "Prakhyath shetty",
+            phone: "9844986072",
+            password: "prakhyth@123",
+        };
     };
     UserRepository.prototype.create = function (post) {
         //

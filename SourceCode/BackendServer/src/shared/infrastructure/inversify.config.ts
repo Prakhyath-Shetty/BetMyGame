@@ -5,13 +5,19 @@ import { UserBuisness } from "../../buisness/UserBuisness";
 
 const container = new Container();
 
-//** Bind the buisness */
+/**
+ * * Bind the buisness
+ * ? register buisness if anyone created added new buisness
+ */
 container
   .bind<UserBuisness>(TYPES.UserBuisness)
   .to(UserBuisness)
   .inSingletonScope();
 
-//** Bind the repository */
+/**
+ * * Bind the repository
+ * ? register repository if anyone created new repository
+ */
 container
   .bind<UserRepository>(TYPES.UserRepository)
   .to(UserRepository)

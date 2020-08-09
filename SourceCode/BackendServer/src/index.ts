@@ -1,34 +1,35 @@
 import "reflect-metadata";
 import express from "express";
-import container from "./shared/infrastructure/inversify.config";
 import { InversifyExpressServer } from "inversify-express-utils";
+import bodyParser from "body-parser";
+import helmet from "helmet";
+import container from "./shared/infrastructure/inversify.config";
 import "./controller/UserController";
+import {
+  clientErrorHandler,
+  errorHandler,
+} from "./shared/infrastructure/errorHandlers";
+
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 // create express application
 const app: express.Application = express();
+
 // let express support JSON bodies
-// app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+app.use(bodyParser.json());
 
-// // grabs the Controller from IoC container and registers all the endpoints
-// const controllers: any[] = container.getAll<
-//   any
-// >(TYPES.Controller);
-// controllers.forEach((controller) => controller.register(app));
+// * setup express middleware logging and error handling
+app.use(clientErrorHandler);
+app.use(errorHandler);
 
-// setup express middleware logging and error handling
-app.use(function (
-  err: Error,
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) {
-  console.error(err.stack);
-  next(err);
-});
-
-app.use(function (err: Error, req: express.Request, res: express.Response) {
-  res.status(500).send("Internal Server Error");
-});
+app.use(helmet());
 
 let server = new InversifyExpressServer(
   container,

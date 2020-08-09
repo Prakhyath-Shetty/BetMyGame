@@ -8,12 +8,18 @@ var types_1 = __importDefault(require("../constants/types"));
 var UserRepository_1 = require("../../repository/UserRepository");
 var UserBuisness_1 = require("../../buisness/UserBuisness");
 var container = new inversify_1.Container();
-//** Bind the buisness */
+/**
+ * * Bind the buisness
+ * ? register buisness if anyone created added new buisness
+ */
 container
     .bind(types_1.default.UserBuisness)
     .to(UserBuisness_1.UserBuisness)
     .inSingletonScope();
-//** Bind the repository */
+/**
+ * * Bind the repository
+ * ? register repository if anyone created new repository
+ */
 container
     .bind(types_1.default.UserRepository)
     .to(UserRepository_1.UserRepository)
