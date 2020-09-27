@@ -10,7 +10,6 @@ import {
 import { UserBuisness } from "../buisness/UserBuisness";
 import TYPES from "../shared/constants/types";
 import { Authorize } from "../shared/helpers/auth.helper";
-import * as jwt from "jsonwebtoken";
 
 @controller("/v1/user")
 export class UserController extends BaseHttpController {
@@ -30,7 +29,6 @@ export class UserController extends BaseHttpController {
     // const data = { username: "prakhyth", password: "shetty" };
     const username: any = query.username;
     const password: any = query.password;
-    debugger;
     console.log("query", query);
 
     if (username && password) {

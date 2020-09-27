@@ -80,7 +80,6 @@ var UserBuisness = /** @class */ (function () {
             var user, token;
             return __generator(this, function (_a) {
                 user = this._userRepository.findOne(username);
-                console.log("process.env.JWT_SECRET", process.env.JWT_SECRET);
                 token = jwt.sign({ userId: user.id, username: user.username }, process.env.JWT_SECRET, { expiresIn: "1h" } // ? Sing JWT, valid for 1 hour
                 );
                 return [2 /*return*/, { token: token, user: user }];
