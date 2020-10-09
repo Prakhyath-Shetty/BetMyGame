@@ -8,16 +8,27 @@ import RegisterPage from "./modules/Authentication/RegisterPage";
 import LoginPage from "./modules/Authentication/LoginPage";
 
 function App() {
-  return (
-    <Layout>
+  const authenticationPages = () => {
+    return (
       <Switch>
-        <Route exact path="/" component={LandingPage} />
         <Route exact path="/RegisterPage" component={RegisterPage} />
         <Route exact path="/LoginPage" component={LoginPage} />
-        <Route exact path="/Game" component={() => <div />} />
       </Switch>
-    </Layout>
-  );
+    );
+  };
+
+  const applicationPages = () => {
+    return (
+      <Layout>
+        <Switch>
+          <Route exact path="/" component={LandingPage} />
+          <Route exact path="/Game" component={() => <div />} />
+        </Switch>
+      </Layout>
+    );
+  };
+
+  return authenticationPages();
 }
 
 export default App;

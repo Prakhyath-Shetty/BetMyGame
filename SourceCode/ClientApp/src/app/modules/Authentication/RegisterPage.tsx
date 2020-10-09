@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers";
-import TextError from "../../components/ErrorMessage/ErrorMessage";
 import { registerUser, validateOTP } from "../../shared/ducks/Auth/Auth.duck";
 import { connect } from "react-redux";
+import { IRegisterForm } from "./auth.models";
 
 interface IFormInput {
   firstName: string;
@@ -13,23 +13,26 @@ interface IFormInput {
   phoneNumber: number;
   userId: number;
 }
+
 interface IFormInputOTP {
   OTP: number;
 }
+
 interface IFormInputUserCredentials {
   userEmail: string;
   password: string;
   confirmPassword: string;
 }
+
 const phoneno = new RegExp(
   /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
 );
 
 function OTPHandler(props: any) {
   const otpValidationSchema = Yup.object({
-    OTP: Yup.string().required("Please enter the OTP"),
+    OTP: Yup.string().required("Please the OTP"),
   });
-  const { user, registerStatus, registerInProgress } = props;
+  const { user } = props;
   const { register, handleSubmit, errors } = useForm<IFormInputOTP>({
     resolver: yupResolver(otpValidationSchema),
   });
@@ -54,7 +57,7 @@ function OTPHandler(props: any) {
                   <input
                     className="form-control"
                     name="OTP"
-                    placeholder="Enter OTP"
+                    placeholder="OTP"
                     ref={register({ required: true })}
                   />
                   <i className="clear-input"></i>
@@ -95,7 +98,6 @@ function CreateAccount(props: any) {
       .required("This field is required")
       .oneOf([Yup.ref("password"), ""], "Passwords must match"),
   });
-  const { user, registerStatus, registerInProgress } = props;
   const { register, handleSubmit, errors } = useForm<IFormInputUserCredentials>(
     {
       resolver: yupResolver(createAccountSchema),
@@ -125,7 +127,7 @@ function CreateAccount(props: any) {
                 <input
                   className="form-control"
                   name="userEmail"
-                  placeholder="Enter email-address"
+                  placeholder="email-address"
                   ref={register({ required: true })}
                 />
                 <i className="clear-input">
@@ -142,7 +144,7 @@ function CreateAccount(props: any) {
                   className="form-control"
                   name="password"
                   type="password"
-                  placeholder="Enter Password"
+                  placeholder="Password"
                   ref={register({ required: true, minLength: 8 })}
                 />
                 <i className="clear-input">
@@ -210,13 +212,12 @@ function RegisterPageHandler(props: any) {
       ),
   });
 
-  const { register, handleSubmit, errors } = useForm<IFormInput>({
+  const { register, handleSubmit, errors } = useForm<IRegisterForm>({
     resolver: yupResolver(registerSchema),
   });
-  const { user, registerStatus, registerInProgress } = props;
   console.log("props", props);
 
-  const onSubmit = (data: IFormInput) => {
+  const onSubmit = (data: IRegisterForm) => {
     props.registerUser({
       data,
     });
@@ -238,7 +239,7 @@ function RegisterPageHandler(props: any) {
                   <input
                     className="form-control"
                     name="firstName"
-                    placeholder="Enter First-name"
+                    placeholder="First-name"
                     ref={register({ required: true, maxLength: 20 })}
                   />
                   <i className="clear-input"></i>
@@ -252,7 +253,7 @@ function RegisterPageHandler(props: any) {
                   <input
                     className="form-control"
                     name="lastName"
-                    placeholder="Enter Last-name"
+                    placeholder="Last-name"
                     ref={register({ required: true, maxLength: 20 })}
                   />
                   <i className="clear-input"></i>
@@ -266,7 +267,7 @@ function RegisterPageHandler(props: any) {
                   <input
                     className="form-control"
                     name="email"
-                    placeholder="Enter Email-address"
+                    placeholder="Email-address"
                     ref={register({ required: true })}
                   />
                   <i className="clear-input"></i>
@@ -280,7 +281,7 @@ function RegisterPageHandler(props: any) {
                   <input
                     className="form-control"
                     name="phoneNumber"
-                    placeholder="Enter Phone-number"
+                    placeholder="Phone-number"
                     ref={register({ required: true })}
                   />
                   <i className="clear-input"></i>
@@ -295,7 +296,7 @@ function RegisterPageHandler(props: any) {
                     className="form-control"
                     name="userId"
                     type="text"
-                    placeholder="Enter Userd-Id"
+                    placeholder="Userd-Id"
                     ref={register({ required: true })}
                   />
                   <i className="clear-input"></i>
@@ -306,11 +307,27 @@ function RegisterPageHandler(props: any) {
               </div>
 
               <div className="mt-1 text-left">
+                <div className="custom-control custom-checkbox">
+                  <input
+                    type="checkbox"
+                    className="custom-control-input"
+                    id="customChecka1"
+                  />
+                  <label
+                    className="custom-control-label text-muted"
+                    htmlFor="customChecka1"
+                  >
+                    I Agree <a href="">Terms & Conditions</a>
+                  </label>
+                </div>
+              </div>
+
+              <div className="form-button-group">
                 <button
                   type="submit"
                   className="btn btn-primary btn-block btn-lg"
                 >
-                  Submit
+                  Register
                 </button>
               </div>
             </div>
@@ -322,11 +339,11 @@ function RegisterPageHandler(props: any) {
 }
 
 function RegisterPage(props: any) {
-  const { user, registerStatus, registerInProgress, otpStatus } = props;
+  const { user, registerStatus, otpStatus } = props;
   console.log("RegisterPage", props);
 
   //const isLoggedIn = props.isLoggedIn;
-  if (registerStatus == 2) {
+  if (registerStatus === 2) {
     if (otpStatus) {
       return <CreateAccount createAccount={props.createAccount} />;
     }

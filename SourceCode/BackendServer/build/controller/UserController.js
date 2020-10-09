@@ -75,13 +75,14 @@ var UserController = /** @class */ (function (_super) {
     }
     UserController.prototype.login = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var body, username, password, user;
+            var query, username, password, user;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        body = req.body;
-                        username = body.username, password = body.password;
-                        debugger;
+                        query = req.query;
+                        username = query.username;
+                        password = query.password;
+                        console.log("query", query);
                         if (!(username && password)) return [3 /*break*/, 2];
                         return [4 /*yield*/, this._userBuisness.login(username, password)];
                     case 1:

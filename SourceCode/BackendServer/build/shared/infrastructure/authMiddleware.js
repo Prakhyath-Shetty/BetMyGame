@@ -34,6 +34,7 @@ function authMiddlewareFactory() {
                 console.error(err);
                 if (err)
                     return res.status(403).json({ Error: "UnAuthorized" });
+                console.log("authenticated", user);
                 next(); // * pass the execution off to whatever request the client intended
             });
             next();
