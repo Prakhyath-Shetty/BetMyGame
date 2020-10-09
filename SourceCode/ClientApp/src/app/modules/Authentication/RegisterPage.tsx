@@ -1,18 +1,17 @@
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers";
 import TextError from "../../components/ErrorMessage/ErrorMessage";
 import { registerUser, validateOTP } from "../../shared/ducks/Auth/Auth.duck";
 import { connect } from "react-redux";
+
 interface IFormInput {
   firstName: string;
   lastName: string;
   email: string;
   phoneNumber: number;
   userId: number;
-  OTP: number;
 }
 interface IFormInputOTP {
   OTP: number;
@@ -173,9 +172,6 @@ function CreateAccount(props: any) {
             </div>
             <div className="form-links mt-2">
               <div>
-                <a href="page-register.html">Register Now</a>
-              </div>
-              <div>
                 <a href="page-forgot-password.html" className="text-muted">
                   Forgot Password?
                 </a>
@@ -186,7 +182,7 @@ function CreateAccount(props: any) {
                 type="submit"
                 className="btn btn-primary btn-block btn-lg"
               >
-                Log in
+                Register
               </button>
             </div>
           </form>
@@ -232,7 +228,7 @@ function RegisterPageHandler(props: any) {
       <div className="login-form">
         <div>
           <div className="section">
-            <h1>Register</h1>
+            <h1 className="center">Register</h1>
             <h4>Fill the form to join us</h4>
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -314,7 +310,7 @@ function RegisterPageHandler(props: any) {
                   type="submit"
                   className="btn btn-primary btn-block btn-lg"
                 >
-                  Verify
+                  Submit
                 </button>
               </div>
             </div>

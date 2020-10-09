@@ -9,7 +9,6 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "connected-react-router": "6.5.2",
-    "formik": "^2.1.5",
     "history": "4.10.1",
     "jquery": "^3.4.1",
     "owl.carousel": "^2.3.4",
