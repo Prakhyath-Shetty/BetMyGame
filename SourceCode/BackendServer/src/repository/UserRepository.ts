@@ -1,39 +1,13 @@
 import { injectable } from "inversify";
+import "reflect-metadata";
+import UserSchema from "../dataAccess/schemas/user.schema";
+import { RepositoryBase } from "./RepositoryBase";
+import { IUser } from "../shared/models";
+import { IUserRepository } from "./";
 
 @injectable()
-export class UserRepository {
-  findOne(username: string) {
-    //
-    return {
-      id: 1,
-      username: "Prakhyath shetty",
-      phone: "9844986072",
-      password: "prakhyth@123",
-    };
-  }
-  findAll() {
-    //
-    return {
-      id: 1,
-      username: "Prakhyath shetty",
-      phone: "9844986072",
-      password: "prakhyth@123",
-    };
-  }
-
-  create(post: any) {
-    //
-  }
-
-  findById(id: number) {
-    //
-  }
-
-  update(id: number, post: any) {
-    //
-  }
-
-  delete(id: number) {
-    //
+export class UserRepository extends RepositoryBase<IUser> implements IUserRepository {
+  constructor() {
+    super(UserSchema);
   }
 }

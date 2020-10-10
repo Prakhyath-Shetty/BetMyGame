@@ -75,7 +75,7 @@ var UserController = /** @class */ (function (_super) {
     }
     UserController.prototype.login = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var query, username, password, user;
+            var query, username, password, loginData, user;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -83,8 +83,12 @@ var UserController = /** @class */ (function (_super) {
                         username = query.username;
                         password = query.password;
                         console.log("query", query);
+                        loginData = {
+                            userName: query.username,
+                            password: query.password,
+                        };
                         if (!(username && password)) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this._userBuisness.login(username, password)];
+                        return [4 /*yield*/, this._userBuisness.login(loginData)];
                     case 1:
                         user = _a.sent();
                         return [2 /*return*/, res.send(user)];
@@ -93,29 +97,35 @@ var UserController = /** @class */ (function (_super) {
             });
         });
     };
-    UserController.prototype.register = function (req) {
+    UserController.prototype.register = function (req, res) {
         var _a = req;
-        var user = this._userBuisness.getUser("");
-        return;
+        var registerData = {
+            firstName: "",
+            lastName: "",
+            userName: "",
+            email: "",
+            password: "",
+            passwordVerify: "",
+        };
+        var user = this._userBuisness.signup(registerData);
+        res.send({ user: user });
     };
     UserController.prototype.getUserById = function (req, res) {
         var _a = req;
-        var user = this._userBuisness.getUser("");
+        var user = this._userBuisness.getProfile("");
         res.send({ user: user });
     };
     __decorate([
         inversify_express_utils_1.httpGet("/login"),
-        __param(0, inversify_express_utils_1.request()),
-        __param(1, inversify_express_utils_1.response())
+        __param(0, inversify_express_utils_1.request()), __param(1, inversify_express_utils_1.response())
     ], UserController.prototype, "login", null);
     __decorate([
-        inversify_express_utils_1.httpGet("/register"),
-        __param(0, inversify_express_utils_1.request())
+        inversify_express_utils_1.httpPost("/register"),
+        __param(0, inversify_express_utils_1.request()), __param(1, inversify_express_utils_1.response())
     ], UserController.prototype, "register", null);
     __decorate([
         inversify_express_utils_1.httpGet("/", auth_helper_1.Authorize({ role: "user" })),
-        __param(0, inversify_express_utils_1.request()),
-        __param(1, inversify_express_utils_1.response())
+        __param(0, inversify_express_utils_1.request()), __param(1, inversify_express_utils_1.response())
     ], UserController.prototype, "getUserById", null);
     UserController = __decorate([
         inversify_express_utils_1.controller("/v1/user"),
