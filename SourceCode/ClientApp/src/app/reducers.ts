@@ -1,4 +1,4 @@
-import * as Auth from "./shared/ducks/Auth.duck";
+import * as Auth from "./shared/ducks/Auth/Auth.duck";
 
 // The top-level state object
 export interface ApplicationState {

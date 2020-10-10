@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import { connectRouter, routerMiddleware } from "connected-react-router";
 import { History } from "history";
 import { ApplicationState, reducers } from "./reducers";
-import { USER_LOGOUT } from "./shared/ducks/Auth.duck";
+import { USER_LOGOUT } from "./shared/ducks/Auth/Auth.duck";
 
 export default function configureStore(
   history: History,
