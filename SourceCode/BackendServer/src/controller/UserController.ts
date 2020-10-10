@@ -53,6 +53,6 @@ export class UserController extends BaseHttpController {
   public getUserById(@request() req: express.Request, @response() res: express.Response) {
     const {} = req;
     const user = this._userBuisness.getProfile("");
-    res.send({ user });
+    res.send({ user: "" });
   }
 }

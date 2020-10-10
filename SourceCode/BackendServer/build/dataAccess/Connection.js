@@ -11,8 +11,8 @@ var DataAccess = /** @class */ (function () {
         this.mongooseConnection.once("open", function () {
             console.log("MongoDB connected.");
         });
-        console.log("MongoDB connection started");
-        this.mongooseInstance = Mongoose.connect("mongodb://localhost/ECommerce");
+        Mongoose.set("useCreateIndex", true);
+        this.mongooseInstance = Mongoose.connect("mongodb://localhost:27017", { useNewUrlParser: true, useUnifiedTopology: true });
         this.mongooseInstance.Promise = global.Promise;
         return this.mongooseInstance;
     };

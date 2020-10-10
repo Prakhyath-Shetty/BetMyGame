@@ -113,7 +113,7 @@ var UserController = /** @class */ (function (_super) {
     UserController.prototype.getUserById = function (req, res) {
         var _a = req;
         var user = this._userBuisness.getProfile("");
-        res.send({ user: user });
+        res.send({ user: "" });
     };
     __decorate([
         inversify_express_utils_1.httpGet("/login"),
