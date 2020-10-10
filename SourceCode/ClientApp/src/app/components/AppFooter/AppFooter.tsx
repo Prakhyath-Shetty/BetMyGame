@@ -1,42 +1,43 @@
-import React, { Fragment } from "react";
+import React from "react";
+import { connect } from "react-redux";
 
-export default function AppFooter() {
+export const AppFooter = () => {
   return (
-    <Fragment>
-      {/* <!-- app footer --> */}
-      <div className="appFooter">
-        <img
-          src="assets/img/logo.png"
-          alt="icon"
-          className="footer-logo mb-2"
-        />
-        <div className="footer-title">
-          Copyright © Mobilekit 2020. All Rights Reserved.
-        </div>
-        <div>Mobilekit is PWA ready Mobile UI Kit Template.</div>
-        Great way to start your mobile websites and pwa projects.
-        <div className="mt-2">
-          <a href="" className="btn btn-icon btn-sm btn-facebook">
-            {/* <ion-icon name="logo-facebook"></ion-icon> */}
+    <div className="footer-wrapper">
+      <div className="footer-section f-section-1">
+        <p className="">
+          Copyright © 2020
+          <a target="_blank" href="https://designreset.com">
+            DesignReset
           </a>
-          <a href="" className="btn btn-icon btn-sm btn-twitter">
-            {/* <ion-icon name="logo-twitter"></ion-icon> */}
-          </a>
-          <a href="" className="btn btn-icon btn-sm btn-linkedin">
-            {/* <ion-icon name="logo-linkedin"></ion-icon> */}
-          </a>
-          <a href="" className="btn btn-icon btn-sm btn-instagram">
-            {/* <ion-icon name="logo-instagram"></ion-icon> */}
-          </a>
-          <a href="" className="btn btn-icon btn-sm btn-whatsapp">
-            {/* <ion-icon name="logo-whatsapp"></ion-icon> */}
-          </a>
-          <a href="#" className="btn btn-icon btn-sm btn-secondary goTop">
-            {/* <ion-icon name="arrow-up-outline"></ion-icon> */}
-          </a>
-        </div>
+          , All rights reserved.
+        </p>
       </div>
-      {/* <!-- * app footer --> */}
-    </Fragment>
+      <div className="footer-section f-section-2">
+        <p className="">
+          Coded with
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="feather feather-heart"
+          >
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </p>
+      </div>
+    </div>
   );
-}
+};
+
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppFooter);

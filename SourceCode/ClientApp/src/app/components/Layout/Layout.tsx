@@ -1,22 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
-
 import AppBar from "../AppBar/AppBar";
-import BottomNav from "../BottomNav/BottomNav";
-import DrawerNav from "../DrawerNav/DrawerNav";
+import { DrawerNav } from "../DrawerNav/DrawerNav";
+import { NavBar } from "../NavBar/NavBar";
 
 const Layout = (props: any) => {
   return (
     <React.Fragment>
       <AppBar />
-      <DrawerNav />
-      {props.children}
-      <BottomNav />
+      <NavBar />
+      <div className="main-container" id="container">
+        <div className="overlay"></div>
+        <div className="search-overlay"></div>
+        <DrawerNav />
+        {props.children}
+      </div>
     </React.Fragment>
   );
 };
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {};
 

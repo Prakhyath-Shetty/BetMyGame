@@ -1,8 +1,9 @@
 export interface IRegisterForm {
-  firstName: string;
-  lastName: string;
+  userName: string;
+  phone: number;
   email: string;
-  phoneNumber: number;
-  userId: number;
-  OTP: number;
+}
+export interface ILoginForm {
+  userName: string;
+  password: number;
 }
