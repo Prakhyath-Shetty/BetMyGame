@@ -24,6 +24,6 @@ yarn-debug.log*
 yarn-error.log*
 
 #local files
-/SourceCode/ClientApp1/node_modules
 /SourceCode/BackendServer/node_modules
 /.vs
+/SourceCode/BackendServer/build
