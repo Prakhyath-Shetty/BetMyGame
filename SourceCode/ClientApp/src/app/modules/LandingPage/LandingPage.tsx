@@ -1,11 +1,17 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
+import AppFooter from "../../components/AppFooter/AppFooter";
 
 export const LandingPage = () => {
   return (
-    <div>
-      <h1>Hello,BetMyGame Project is under construction</h1>
-    </div>
+    <Fragment>
+      <div id="content" className="main-content">
+        <div className="layout-px-spacing">
+          <div className="row layout-top-spacing"></div>
+        </div>
+        <AppFooter />
+      </div>
+    </Fragment>
   );
 };
 
