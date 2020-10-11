@@ -34,25 +34,26 @@ export class UserController extends BaseHttpController {
     }
   }
 
-  @httpPost("/register")
+  @httpGet("/register")
   public register(@request() req: express.Request, @response() res: express.Response) {
     const {} = req;
     const registerData: ISignupModel = {
-      firstName: "",
-      lastName: "",
-      userName: "",
-      email: "",
-      password: "",
-      passwordVerify: "",
+      firstName: "prakhyath",
+      lastName: "shetty",
+      userName: "prakhyath",
+      phone: "9844986072",
+      email: "prakhyath@mail.com",
+      password: "123456@qeewt",
+      passwordVerify: "123456",
     };
     const user = this._userBuisness.signup(registerData);
-    res.send({ user });
+    res.status(200).send({ user });
   }
 
   @httpGet("/") //Authorize({ role: "user" })
   public getUserById(@request() req: express.Request, @response() res: express.Response) {
     const {} = req;
-    // const user = this._userBuisness.getProfile("");
-    res.status(200).send({ user: "user found" });
+    const user = this._userBuisness.getProfile("5f82b45eaa510f0cb80434a8");
+    res.status(200).send({ user: user });
   }
 }

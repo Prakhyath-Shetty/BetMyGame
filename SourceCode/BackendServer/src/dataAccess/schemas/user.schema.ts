@@ -45,7 +45,6 @@ class UserSchema {
       password: {
         type: String,
         required: true,
-        match: /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\d])(?=.*?[\W]).{8,35}$/,
       },
       createdAt: {
         type: Date,

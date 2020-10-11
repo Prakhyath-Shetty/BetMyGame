@@ -12,7 +12,10 @@ var DataAccess = /** @class */ (function () {
             console.log("MongoDB connected.");
         });
         Mongoose.set("useCreateIndex", true);
-        this.mongooseInstance = Mongoose.connect("mongodb://localhost:27017", { useNewUrlParser: true, useUnifiedTopology: true });
+        this.mongooseInstance = Mongoose.connect("mongodb://localhost:27017/BetMyGame", {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
         this.mongooseInstance.Promise = global.Promise;
         return this.mongooseInstance;
     };

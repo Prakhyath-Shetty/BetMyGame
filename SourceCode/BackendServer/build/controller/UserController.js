@@ -99,27 +99,28 @@ var UserController = /** @class */ (function (_super) {
     UserController.prototype.register = function (req, res) {
         var _a = req;
         var registerData = {
-            firstName: "",
-            lastName: "",
-            userName: "",
-            email: "",
-            password: "",
-            passwordVerify: "",
+            firstName: "prakhyath",
+            lastName: "shetty",
+            userName: "prakhyath",
+            phone: "9844986072",
+            email: "prakhyath@mail.com",
+            password: "123456@qeewt",
+            passwordVerify: "123456",
         };
         var user = this._userBuisness.signup(registerData);
-        res.send({ user: user });
+        res.status(200).send({ user: user });
     };
     UserController.prototype.getUserById = function (req, res) {
         var _a = req;
-        // const user = this._userBuisness.getProfile("");
-        res.status(200).send({ user: "user found" });
+        var user = this._userBuisness.getProfile("5f82b45eaa510f0cb80434a8");
+        res.status(200).send({ user: user });
     };
     __decorate([
         inversify_express_utils_1.httpGet("/login"),
         __param(0, inversify_express_utils_1.request()), __param(1, inversify_express_utils_1.response())
     ], UserController.prototype, "login", null);
     __decorate([
-        inversify_express_utils_1.httpPost("/register"),
+        inversify_express_utils_1.httpGet("/register"),
         __param(0, inversify_express_utils_1.request()), __param(1, inversify_express_utils_1.response())
     ], UserController.prototype, "register", null);
     __decorate([
