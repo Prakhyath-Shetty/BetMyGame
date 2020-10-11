@@ -5,10 +5,7 @@ import bodyParser from "body-parser";
 import helmet from "helmet";
 import container from "./shared/infrastructure/inversify.config";
 import "./controller/UserController";
-import {
-  clientErrorHandler,
-  errorHandler,
-} from "./shared/infrastructure/errorHandlers";
+import { clientErrorHandler, errorHandler } from "./shared/infrastructure/errorHandlers";
 
 import * as dotenv from "dotenv";
 
@@ -28,18 +25,9 @@ app.use(bodyParser.json());
 // * setup express middleware logging and error handling
 app.use(clientErrorHandler);
 app.use(errorHandler);
-
 app.use(helmet());
 
-let server = new InversifyExpressServer(
-  container,
-  null,
-  { rootPath: "/api" },
-  app
-);
+let server = new InversifyExpressServer(container, null, { rootPath: "/api" }, app);
 
 let appConfigured = server.build();
-let serve: any = appConfigured.listen(
-  process.env.PORT || 3000,
-  () => `App running on ${serve.address().port}`
-);
+let serve: any = appConfigured.listen(process.env.PORT || 8080, () => console.log(`App running on ${serve.address().port}`));

@@ -49,10 +49,10 @@ export class UserController extends BaseHttpController {
     res.send({ user });
   }
 
-  @httpGet("/", Authorize({ role: "user" }))
+  @httpGet("/") //Authorize({ role: "user" })
   public getUserById(@request() req: express.Request, @response() res: express.Response) {
     const {} = req;
-    const user = this._userBuisness.getProfile("");
-    res.send({ user: "" });
+    // const user = this._userBuisness.getProfile("");
+    res.status(200).send({ user: "user found" });
   }
 }

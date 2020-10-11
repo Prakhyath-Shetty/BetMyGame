@@ -65,7 +65,6 @@ exports.UserController = void 0;
 var inversify_1 = require("inversify");
 var inversify_express_utils_1 = require("inversify-express-utils");
 var types_1 = __importDefault(require("../shared/constants/types"));
-var auth_helper_1 = require("../shared/helpers/auth.helper");
 var UserController = /** @class */ (function (_super) {
     __extends(UserController, _super);
     function UserController(userBuisness) {
@@ -112,8 +111,8 @@ var UserController = /** @class */ (function (_super) {
     };
     UserController.prototype.getUserById = function (req, res) {
         var _a = req;
-        var user = this._userBuisness.getProfile("");
-        res.send({ user: "" });
+        // const user = this._userBuisness.getProfile("");
+        res.status(200).send({ user: "user found" });
     };
     __decorate([
         inversify_express_utils_1.httpGet("/login"),
@@ -124,7 +123,8 @@ var UserController = /** @class */ (function (_super) {
         __param(0, inversify_express_utils_1.request()), __param(1, inversify_express_utils_1.response())
     ], UserController.prototype, "register", null);
     __decorate([
-        inversify_express_utils_1.httpGet("/", auth_helper_1.Authorize({ role: "user" })),
+        inversify_express_utils_1.httpGet("/") //Authorize({ role: "user" })
+        ,
         __param(0, inversify_express_utils_1.request()), __param(1, inversify_express_utils_1.response())
     ], UserController.prototype, "getUserById", null);
     UserController = __decorate([

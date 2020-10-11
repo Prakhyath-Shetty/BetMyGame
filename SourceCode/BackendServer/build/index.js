@@ -45,4 +45,4 @@ app.use(errorHandlers_1.errorHandler);
 app.use(helmet_1.default());
 var server = new inversify_express_utils_1.InversifyExpressServer(inversify_config_1.default, null, { rootPath: "/api" }, app);
 var appConfigured = server.build();
-var serve = appConfigured.listen(process.env.PORT || 3000, function () { return "App running on " + serve.address().port; });
+var serve = appConfigured.listen(process.env.PORT || 8080, function () { return console.log("App running on " + serve.address().port); });
