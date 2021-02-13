@@ -1,257 +1,85 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import routeConfiguration from "../../configureRoute";
+import { IRouteConfig } from "../../shared/models/Common.model";
 
 export const DrawerNav = () => {
+  const routes: IRouteConfig[] = routeConfiguration();
+  const navModules: IRouteConfig[] = routes.filter((route) => route.isNavMenu);
   return (
     <div className="sidebar-wrapper sidebar-theme">
       <nav id="sidebar">
         <div className="shadow-bottom"></div>
-
         <ul className="list-unstyled menu-categories" id="accordionExample">
-          <li className="menu">
-            <a
-              href="#starter-kit"
-              data-active="true"
-              data-toggle="collapse"
-              aria-expanded="true"
-              className="dropdown-toggle"
-            >
-              <div className="">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  className="feather feather-terminal"
-                >
-                  <polyline points="4 17 10 11 4 5"></polyline>
-                  <line x1="12" y1="19" x2="20" y2="19"></line>
-                </svg>
-                <span>Starter Kit</span>
-              </div>
-              <div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  className="feather feather-chevron-right"
-                >
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </div>
-            </a>
-            <ul
-              className="submenu list-unstyled collapse show"
-              id="starter-kit"
-              data-parent="#accordionExample"
-            >
-              <li className="active">
-                <a href="starter_kit_blank_page.html"> Blank Page </a>
-              </li>
-              <li>
-                <a href="starter_kit_breadcrumbs.html"> Breadcrumbs </a>
-              </li>
-              <li>
-                <a href="starter_kit_boxed.html"> Boxed </a>
-              </li>
-              <li>
-                <a href="starter_kit_alt_menu.html"> Alternate Menu </a>
-              </li>
-            </ul>
-          </li>
-
-          <li className="menu">
-            <a
-              href="javascript:void(0);"
-              aria-expanded="false"
-              className="dropdown-toggle"
-            >
-              <div className="">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  className="feather feather-home"
-                >
-                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-                <span> Menu 1</span>
-              </div>
-            </a>
-          </li>
-
-          <li className="menu">
-            <a
-              href="#submenu"
-              data-toggle="collapse"
-              aria-expanded="false"
-              className="dropdown-toggle"
-            >
-              <div className="">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  className="feather feather-airplay"
-                >
-                  <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path>
-                  <polygon points="12 15 17 21 7 21 12 15"></polygon>
-                </svg>
-                <span> Menu 2</span>
-              </div>
-              <div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  className="feather feather-chevron-right"
-                >
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </div>
-            </a>
-            <ul
-              className="collapse submenu list-unstyled"
-              id="submenu"
-              data-parent="#accordionExample"
-            >
-              <li>
-                <a href="javascript:void(0);"> Submenu 1 </a>
-              </li>
-              <li>
-                <a href="javascript:void(0);"> Submenu 2 </a>
-              </li>
-            </ul>
-          </li>
-
-          <li className="menu">
-            <a
-              href="#submenu2"
-              data-toggle="collapse"
-              aria-expanded="false"
-              className="dropdown-toggle"
-            >
-              <div className="">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  className="feather feather-file"
-                >
-                  <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
-                  <polyline points="13 2 13 9 20 9"></polyline>
-                </svg>
-                <span> Menu 3</span>
-              </div>
-              <div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  className="feather feather-chevron-right"
-                >
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </div>
-            </a>
-            <ul
-              className="collapse submenu list-unstyled"
-              id="submenu2"
-              data-parent="#accordionExample"
-            >
-              <li>
-                <a href="javascript:void(0);"> Submenu 1 </a>
-              </li>
-              <li>
+          {navModules.map((nav, index) => {
+            return (
+              <li key={index} className="menu">
                 <a
-                  href="#sm2"
+                  href={"#submenu" + index}
+                  data-active="false"
                   data-toggle="collapse"
                   aria-expanded="false"
                   className="dropdown-toggle"
                 >
-                  Submenu 2
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="feather feather-chevron-right"
-                  >
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
+                  <div className="">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="feather feather-home"
+                    >
+                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>{nav.title}</span>
+                  </div>
+                  {nav.children && nav.children.length && (
+                    <div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="feather feather-chevron-right"
+                      >
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                      </svg>
+                    </div>
+                  )}
                 </a>
-                <ul
-                  className="collapse list-unstyled sub-submenu"
-                  id="sm2"
-                  data-parent="#submenu2"
-                >
-                  <li>
-                    <a href="javascript:void(0);"> Sub-Submenu 1 </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);"> Sub-Submenu 2 </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);"> Sub-Submenu 3 </a>
-                  </li>
-                </ul>
+                {nav.children && nav.children.length && (
+                  <ul className="submenu list-unstyled collapse show" id={"submenu" + index} data-parent="#accordionExample">
+                    {nav.children.map((subNav, i) => {
+                      return (
+                        <li key={i}>
+                          <Link to={subNav.path}> {subNav.title} </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
               </li>
-            </ul>
-          </li>
+            );
+          })}
         </ul>
       </nav>
     </div>
   );
 };
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {};
 

@@ -1,22 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import AppConstants from "../../shared/constants/app-constants";
 
-export const AppBar = () => {
+export const AppBar = (props: { onCloseNavBar: () => void; isNavOpen: any }) => {
+  const onCloseNavBar = () => {
+    props.onCloseNavBar();
+  };
   return (
-    <div className="header-container fixed-top">
-      <header className="header navbar navbar-expand-sm">
+    <div className="header-container fixed-top" onClick={onCloseNavBar}>
+      <header className={props.isNavOpen ? " header navbar navbar-expand-sm expand-header" : "header navbar navbar-expand-sm"}>
         <ul className="navbar-item theme-brand flex-row text-center">
           <li className="nav-item theme-logo">
-            <a>
-              <img
-                src={"./assets/img/90x90.jpg"}
-                className="navbar-logo"
-                alt="logo"
-              />
-            </a>
+            <Link to="/Home">
+              <img src={"./assets/img/90x90.jpg"} className="navbar-logo" alt="logo" />
+            </Link>
           </li>
           <li className="nav-item theme-text">
-            <a className="nav-link"> CORK </a>
+            <Link className="nav-link" to="/Home">
+              {AppConstants.AppTitle}
+            </Link>
           </li>
         </ul>
 
@@ -31,13 +34,10 @@ export const AppBar = () => {
             >
               <img src="../../assets/img/90x90.jpg" alt="avatar" />
             </a>
-            <div
-              className="dropdown-menu position-absolute"
-              aria-labelledby="userProfileDropdown"
-            >
+            <div className="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
               <div className="">
                 <div className="dropdown-item">
-                  <a className="">
+                  <Link className="" to="/AccountSettings">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -54,7 +54,7 @@ export const AppBar = () => {
                       <circle cx="12" cy="7" r="4"></circle>
                     </svg>
                     My Profile
-                  </a>
+                  </Link>
                 </div>
                 <div className="dropdown-item">
                   <a className="">
@@ -90,14 +90,7 @@ export const AppBar = () => {
                       strokeLinejoin="round"
                       className="feather feather-lock"
                     >
-                      <rect
-                        x="3"
-                        y="11"
-                        width="18"
-                        height="11"
-                        rx="2"
-                        ry="2"
-                      ></rect>
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                       <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                     </svg>
                     Lock Screen
