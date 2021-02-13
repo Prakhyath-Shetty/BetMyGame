@@ -5,6 +5,7 @@ import { UserBuisness } from "../buisness";
 import TYPES from "../shared/constants/types";
 import { Authorize } from "../shared/helpers/auth.helper";
 import { ILoginModel, ISignupModel } from "../shared/models";
+import { IAuthResponceModel } from "../shared/models/viewModels/IAuthResponceModel";
 
 @controller("/v1/user")
 export class UserController extends BaseHttpController {
@@ -19,18 +20,22 @@ export class UserController extends BaseHttpController {
   public async login(@request() req: express.Request, @response() res: express.Response) {
     const { query } = req;
     // const data = { username: "prakhyth", password: "shetty" };
-    const username: any = query.username;
-    const password: any = query.password;
-    console.log("query", query);
+    const userName: any = "prakhyath";
+    const password: any = "123456@qeewt";
+
+    // const loginData: ILoginModel = {
+    //   userName: <string>query.username,
+    //   password: <string>query.password,
+    // };
 
     const loginData: ILoginModel = {
-      userName: <string>query.username,
-      password: <string>query.password,
+      userName,
+      password,
     };
 
-    if (username && password) {
-      const user = await this._userBuisness.login(loginData);
-      return res.send(user);
+    if (userName && password) {
+      const authData: IAuthResponceModel = await this._userBuisness.login(loginData);
+      return res.send(authData);
     }
   }
 
@@ -50,7 +55,7 @@ export class UserController extends BaseHttpController {
     res.status(200).send({ user });
   }
 
-  @httpGet("/") //Authorize({ role: "user" })
+  @httpGet("/test", Authorize({ role: "user" }))
   public getUserById(@request() req: express.Request, @response() res: express.Response) {
     const {} = req;
     const user = this._userBuisness.getProfile("5f82b45eaa510f0cb80434a8");

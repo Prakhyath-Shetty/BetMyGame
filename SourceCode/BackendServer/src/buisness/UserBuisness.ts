@@ -4,6 +4,7 @@ import { UserRepository } from "../repository/UserRepository";
 import TYPES from "../shared/constants/types";
 import { IUserBuisness } from "./interfaces/IUserBuisness";
 import { ILoginModel, ISignupModel, IUser } from "../shared/models";
+import { IAuthResponceModel } from "../shared/models/viewModels/IAuthResponceModel";
 
 @injectable()
 export class UserBuisness implements IUserBuisness {
@@ -28,24 +29,35 @@ export class UserBuisness implements IUserBuisness {
   }
 
   //TODO : provide token cant be in here, change it later
-  login(item: ILoginModel): Promise<any> {
-    let p = new Promise<IUser>((resolve, reject) => {
+  login(item: ILoginModel): Promise<IAuthResponceModel> {
+    console.log("ILoginModel", item);
+
+    let userInfo = new Promise<IAuthResponceModel>((resolve, reject) => {
       this._userRepository
         .findOne({ userName: item.userName, password: item.password }, {}, {})
         .then((res: IUser) => {
           if (res) {
             // TODO : return the token
-            var token = jwt.sign({ _id: res._id, userName: res.userName }, "MySecret", { expiresIn: 86400000 });
-            resolve(res); // token
+            var accessToken = jwt.sign({ _id: res._id, userName: res.userName }, process.env.ACCESS_TOKEN_SECRET as string, {
+              expiresIn: 86400000,
+            });
+            const authResponce: IAuthResponceModel = {
+              firstName: res.firstName,
+              lastName: res.lastName,
+              userName: res.userName,
+              phone: res.phone,
+              accessToken,
+            };
+            resolve(authResponce);
           } else {
-            reject("Wrong username or password");
+            reject("Username or password incorrect'");
           }
         })
         .catch((error) => {
           reject(error);
         });
     });
-    return p;
+    return userInfo;
   }
 
   //TODO : Change it, it cant be return user password vs vs
