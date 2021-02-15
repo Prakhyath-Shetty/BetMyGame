@@ -65,6 +65,7 @@ exports.UserController = void 0;
 var inversify_1 = require("inversify");
 var inversify_express_utils_1 = require("inversify-express-utils");
 var types_1 = __importDefault(require("../shared/constants/types"));
+var auth_helper_1 = require("../shared/helpers/auth.helper");
 var UserController = /** @class */ (function (_super) {
     __extends(UserController, _super);
     function UserController(userBuisness) {
@@ -74,23 +75,22 @@ var UserController = /** @class */ (function (_super) {
     }
     UserController.prototype.login = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var query, username, password, loginData, user;
+            var query, userName, password, loginData, authData;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         query = req.query;
-                        username = query.username;
-                        password = query.password;
-                        console.log("query", query);
+                        userName = "prakhyath";
+                        password = "123456@qeewt";
                         loginData = {
-                            userName: query.username,
-                            password: query.password,
+                            userName: userName,
+                            password: password,
                         };
-                        if (!(username && password)) return [3 /*break*/, 2];
+                        if (!(userName && password)) return [3 /*break*/, 2];
                         return [4 /*yield*/, this._userBuisness.login(loginData)];
                     case 1:
-                        user = _a.sent();
-                        return [2 /*return*/, res.send(user)];
+                        authData = _a.sent();
+                        return [2 /*return*/, res.send(authData)];
                     case 2: return [2 /*return*/];
                 }
             });
@@ -124,8 +124,7 @@ var UserController = /** @class */ (function (_super) {
         __param(0, inversify_express_utils_1.request()), __param(1, inversify_express_utils_1.response())
     ], UserController.prototype, "register", null);
     __decorate([
-        inversify_express_utils_1.httpGet("/") //Authorize({ role: "user" })
-        ,
+        inversify_express_utils_1.httpGet("/test", auth_helper_1.Authorize({ role: "user" })),
         __param(0, inversify_express_utils_1.request()), __param(1, inversify_express_utils_1.response())
     ], UserController.prototype, "getUserById", null);
     UserController = __decorate([

@@ -56,24 +56,34 @@ var UserBuisness = /** @class */ (function () {
     //TODO : provide token cant be in here, change it later
     UserBuisness.prototype.login = function (item) {
         var _this = this;
-        var p = new Promise(function (resolve, reject) {
+        console.log("ILoginModel", item);
+        var userInfo = new Promise(function (resolve, reject) {
             _this._userRepository
                 .findOne({ userName: item.userName, password: item.password }, {}, {})
                 .then(function (res) {
                 if (res) {
                     // TODO : return the token
-                    var token = jwt.sign({ _id: res._id, userName: res.userName }, "MySecret", { expiresIn: 86400000 });
-                    resolve(res); // token
+                    var accessToken = jwt.sign({ _id: res._id, userName: res.userName }, process.env.ACCESS_TOKEN_SECRET, {
+                        expiresIn: 86400000,
+                    });
+                    var authResponce = {
+                        firstName: res.firstName,
+                        lastName: res.lastName,
+                        userName: res.userName,
+                        phone: res.phone,
+                        accessToken: accessToken,
+                    };
+                    resolve(authResponce);
                 }
                 else {
-                    reject("Wrong username or password");
+                    reject("Username or password incorrect'");
                 }
             })
                 .catch(function (error) {
                 reject(error);
             });
         });
-        return p;
+        return userInfo;
     };
     //TODO : Change it, it cant be return user password vs vs
     UserBuisness.prototype.getProfile = function (_id) {

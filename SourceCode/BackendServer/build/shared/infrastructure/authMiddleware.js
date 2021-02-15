@@ -26,14 +26,15 @@ function authMiddlewareFactory() {
         return function (req, res, next) {
             var authHeader = req.headers["authorization"];
             var token = authHeader && authHeader.split(" ")[1];
+            console.log("token", token);
             if (token === null) {
-                res.status(403).json({ Error: "UnAuthorized" });
+                res.status(403).json("UnAuthorized");
                 return;
             }
             jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, function (err, user) {
                 console.error(err);
                 if (err)
-                    return res.status(403).json({ Error: "UnAuthorized" });
+                    return res.status(403).json("UnAuthorized");
                 console.log("authenticated", user);
                 next(); // * pass the execution off to whatever request the client intended
             });
