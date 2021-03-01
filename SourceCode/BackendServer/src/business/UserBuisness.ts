@@ -1,13 +1,13 @@
 import { inject, injectable } from "inversify";
 import * as jwt from "jsonwebtoken";
-import { UserRepository } from "../repository/UserRepository";
 import TYPES from "../shared/constants/types";
-import { IUserBuisness } from "./interfaces/IUserBuisness";
 import { ILoginModel, ISignupModel, IUser } from "../shared/models";
 import { IAuthResponceModel } from "../shared/models/viewModels/IAuthResponceModel";
+import { IUserBusiness } from "./interfaces/IUserBuisness";
+import { UserRepository } from "../repository/UserRepository";
 
 @injectable()
-export class UserBuisness implements IUserBuisness {
+export class UserBusiness implements IUserBusiness {
   private readonly _userRepository: UserRepository;
 
   constructor(@inject(TYPES.UserRepository) userRepository: UserRepository) {
@@ -38,7 +38,7 @@ export class UserBuisness implements IUserBuisness {
         .then((res: IUser) => {
           if (res) {
             // TODO : return the token
-            var accessToken = jwt.sign({ _id: res._id, userName: res.userName }, process.env.ACCESS_TOKEN_SECRET as string, {
+            var token = jwt.sign({ _id: res._id, userName: res.userName }, process.env.ACCESS_TOKEN_SECRET as string, {
               expiresIn: 86400000,
             });
             const authResponce: IAuthResponceModel = {
@@ -46,7 +46,7 @@ export class UserBuisness implements IUserBuisness {
               lastName: res.lastName,
               userName: res.userName,
               phone: res.phone,
-              accessToken,
+              token,
             };
             resolve(authResponce);
           } else {

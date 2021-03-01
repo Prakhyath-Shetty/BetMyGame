@@ -5,5 +5,5 @@ export interface IAuthResponceModel {
   lastName: string;
   userName: string;
   phone: string;
-  accessToken: string;
+  token: string;
 }

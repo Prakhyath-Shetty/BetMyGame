@@ -8,7 +8,7 @@ var mongooseConnection = DataAccess.mongooseConnection;
 //TODO : check the matches and schemas before using it
 
 class UserSchema {
-  static get schema() {
+  static schema() {
     var schema = new Schema({
       firstName: {
         type: String,
@@ -54,5 +54,5 @@ class UserSchema {
     return schema;
   }
 }
-var schema = mongooseConnection.model<IUser>("User", UserSchema.schema);
+var schema = mongooseConnection.model<IUser>("User", UserSchema.schema() as any);
 export = schema;

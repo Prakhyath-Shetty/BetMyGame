@@ -33,7 +33,7 @@ export abstract class RepositoryBase<T extends Document> implements IRepositoryB
     return p;
   }
 
-  retrieve(callback: (error: any, result: T[]) => void): Promise<T[]> {
+  retrieve(callback?: (error: any, result: T[]) => void): Promise<T[]> {
     let self = this;
     let p = new Promise<T[]>((resolve, reject) => {
       self._model.find({}, (err: any, res: T[]) => {
@@ -72,7 +72,7 @@ export abstract class RepositoryBase<T extends Document> implements IRepositoryB
   findOne(cond: any, fields: any, options: any, callback?: (err: any, res: T) => void): Promise<T> {
     let self = this;
     let p = new Promise<T>((resolve, reject) => {
-      self._model.findOne(cond, fields, options).exec((err: any, res: T) => {
+      self._model.findOne(cond, fields, options).exec((err: any, res: any) => {
         if (callback) {
           callback(err, <T>res);
         }
@@ -94,7 +94,7 @@ export abstract class RepositoryBase<T extends Document> implements IRepositoryB
         query = query.sort(sortOptions);
       }
 
-      query.exec((err: any, res: T[]) => {
+      query.exec((err: any, res: any) => {
         if (callback) {
           callback(err, <T[]>res);
         }
@@ -116,7 +116,7 @@ export abstract class RepositoryBase<T extends Document> implements IRepositoryB
         if (err) {
           reject(err);
         } else {
-          resolve(count);
+          resolve(count ? count : 0);
         }
       });
     });
@@ -137,7 +137,6 @@ export abstract class RepositoryBase<T extends Document> implements IRepositoryB
           resolve(<T>result);
         }
       });
-      resolve();
     });
 
     return p;

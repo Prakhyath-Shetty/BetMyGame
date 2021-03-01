@@ -3,7 +3,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -68,9 +68,9 @@ var types_1 = __importDefault(require("../shared/constants/types"));
 var auth_helper_1 = require("../shared/helpers/auth.helper");
 var UserController = /** @class */ (function (_super) {
     __extends(UserController, _super);
-    function UserController(userBuisness) {
+    function UserController(userBusiness) {
         var _this = _super.call(this) || this;
-        _this._userBuisness = userBuisness;
+        _this._userBusiness = userBusiness;
         return _this;
     }
     UserController.prototype.login = function (req, res) {
@@ -87,7 +87,7 @@ var UserController = /** @class */ (function (_super) {
                             password: password,
                         };
                         if (!(userName && password)) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this._userBuisness.login(loginData)];
+                        return [4 /*yield*/, this._userBusiness.login(loginData)];
                     case 1:
                         authData = _a.sent();
                         return [2 /*return*/, res.send(authData)];
@@ -107,12 +107,12 @@ var UserController = /** @class */ (function (_super) {
             password: "123456@qeewt",
             passwordVerify: "123456",
         };
-        var user = this._userBuisness.signup(registerData);
+        var user = this._userBusiness.signup(registerData);
         res.status(200).send({ user: user });
     };
     UserController.prototype.getUserById = function (req, res) {
         var _a = req;
-        var user = this._userBuisness.getProfile("5f82b45eaa510f0cb80434a8");
+        var user = this._userBusiness.getProfile("5f82b45eaa510f0cb80434a8");
         res.status(200).send({ user: user });
     };
     __decorate([
@@ -129,7 +129,7 @@ var UserController = /** @class */ (function (_super) {
     ], UserController.prototype, "getUserById", null);
     UserController = __decorate([
         inversify_express_utils_1.controller("/v1/user"),
-        __param(0, inversify_1.inject(types_1.default.UserBuisness))
+        __param(0, inversify_1.inject(types_1.default.UserBusiness))
     ], UserController);
     return UserController;
 }(inversify_express_utils_1.BaseHttpController));

@@ -8,6 +8,6 @@ import { IUserRepository } from "./";
 @injectable()
 export class UserRepository extends RepositoryBase<IUser> implements IUserRepository {
   constructor() {
-    super(UserSchema);
+    super(UserSchema as any);
   }
 }

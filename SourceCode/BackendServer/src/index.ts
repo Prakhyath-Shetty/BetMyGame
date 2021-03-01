@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import helmet from "helmet";
 import container from "./shared/infrastructure/inversify.config";
 import "./controller/UserController";
+import "./controller/GameController";
 import { clientErrorHandler, errorHandler } from "./shared/infrastructure/errorHandlers";
 
 import * as dotenv from "dotenv";

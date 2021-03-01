@@ -5,7 +5,6 @@ import "./assets/bootstrap/css/bootstrap.min.css";
 import "bootstrap";
 import React, { useState } from "react";
 import { Switch, Route } from "react-router";
-import Routes from "./configureRoute";
 import ProtectedRoute from "./components/Common/ProtectedRoute";
 import { IRouteConfig } from "./shared/models/Common.model";
 import routeConfiguration from "./configureRoute";
@@ -27,14 +26,29 @@ const App = () => {
     console.log("renderRoute", route.path, "--->", route);
 
     if (route.auth) {
-      return <ProtectedRoute key={index} authenticated={authenticated} route={route} />;
+      return (
+        <ProtectedRoute
+          key={index}
+          authenticated={authenticated}
+          route={route}
+        />
+      );
     } else {
-      return <Route key={index} exact path={route.path} component={route.component} />;
+      return (
+        <Route
+          key={index}
+          exact
+          path={route.path}
+          component={route.component}
+        />
+      );
     }
   };
 
   const renderRoutes = () => {
-    return <Switch>{routes.map((route, index) => renderRoute(route, index))}</Switch>;
+    return (
+      <Switch>{routes.map((route, index) => renderRoute(route, index))}</Switch>
+    );
   };
 
   return renderRoutes();

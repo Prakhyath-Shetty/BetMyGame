@@ -1,6 +1,8 @@
 const TYPES = {
   UserRepository: Symbol("UserRepository"),
-  UserBuisness: Symbol("UserBuisness"),
+  GameRepository: Symbol("GameRepository"),
+  UserBusiness: Symbol("UserBusiness"),
+  GameBusiness: Symbol("GameBusiness"),
   Controller: Symbol("Controller"),
 };
 

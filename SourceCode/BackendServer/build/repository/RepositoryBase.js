@@ -117,7 +117,7 @@ var RepositoryBase = /** @class */ (function () {
                     reject(err);
                 }
                 else {
-                    resolve(count);
+                    resolve(count ? count : 0);
                 }
             });
         });
@@ -136,7 +136,6 @@ var RepositoryBase = /** @class */ (function () {
                     resolve(result);
                 }
             });
-            resolve();
         });
         return p;
     };

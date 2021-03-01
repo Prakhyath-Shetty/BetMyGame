@@ -2,7 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var TYPES = {
     UserRepository: Symbol("UserRepository"),
-    UserBuisness: Symbol("UserBuisness"),
+    GameRepository: Symbol("GameRepository"),
+    UserBusiness: Symbol("UserBusiness"),
+    GameBusiness: Symbol("GameBusiness"),
     Controller: Symbol("Controller"),
 };
 exports.default = TYPES;
